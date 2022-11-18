@@ -1,9 +1,21 @@
-import React, { useImperativeHandle, useEffect } from "react";
+import React, { useImperativeHandle, useEffect, useRef } from "react";
 
 const TodoForm = React.forwardRef((props, ref) => {
-//   useImperativeHandle(ref, () => ({
-//     resetAll: resetAllInput,
-//   }));
+
+  const newInputRef = useRef();
+
+  const resetAllInput = () => {
+    console.log("Reset All");
+    newInputRef.current.value = "";
+    setTodo("");
+  };
+
+  useImperativeHandle(ref, () => ({
+    resetAll: resetAllInput,
+    setRefInput: (val) => {
+      newInputRef.current.value = val;
+    }
+  }));
 
     //TODO: fix imerativeHandle
     //TODO: useSelecter, useDispatch (redux)
@@ -28,12 +40,6 @@ const TodoForm = React.forwardRef((props, ref) => {
 
   //   const token = "";
 
-  const resetAllInput = () => {
-    console.log("Reset All");
-    ref.current.value = "";
-    setTodo("");
-  };
-
   const onTodoChangeHandler = (e) => {
     setTodo(e.target.value);
   };
@@ -50,7 +56,7 @@ const TodoForm = React.forwardRef((props, ref) => {
 
   return (
     <form onSubmit={onSubmitHandler}>
-      <input ref={ref} placeholder="ref input" onFocus={onFocusHandler} />
+      <input ref={newInputRef} placeholder="ref input" onFocus={onFocusHandler} />
       <input
         placeholder="Add Todo"
         value={todo}

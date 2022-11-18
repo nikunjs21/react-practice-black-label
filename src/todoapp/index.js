@@ -38,7 +38,7 @@ const TodoApp = () => {
   return (
     <>
     <Button onClick={() => {
-        todoRef.current.value = new Date().getTime();
+        todoRef.current.setRefInput(new Date().getTime());
         // console.log("run");
     }}>Set Val Input Ref</Button>
     <Button onClick={() => {
